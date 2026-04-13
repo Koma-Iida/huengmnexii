@@ -23,7 +23,7 @@ def load(app):
     app.state.counter = 0
     if len(app.state.messages.messages) != 0:
         # id の最大値 + 1 をカウンタにセット
-        app.state.counter = max(list(app.state.messages.messages)) + 1
+        app.state.counter = max(app.state.messages.messages.keys()) + 1
 
 
 async def save(app):
