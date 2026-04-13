@@ -17,7 +17,7 @@ def load(app):
             app.state.system = message_schema.System.model_validate(data_dict)
     except (FileNotFoundError, ValidationError):
         # ファイルが存在しない or ファイルがうまく読めない
-        # →Default の Message を作成する
+        # →Default の System を作成する
         app.state.system = message_schema.System()
 
     app.state.counter = 0
