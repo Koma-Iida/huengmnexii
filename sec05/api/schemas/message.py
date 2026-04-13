@@ -9,7 +9,7 @@ class MessageBase(BaseModel):
     message: str | None = Field(None,
                                 examples=["Default Message"],
                                 description="Message body")
-    important: bool | None = Field(False, description="Important or not")
+    important: bool = Field(False, description="Important or not")
 
 
 class Message(MessageBase):
