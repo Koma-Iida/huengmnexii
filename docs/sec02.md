@@ -54,7 +54,7 @@ async def get_message():
 @app.post("/message", response_model=message_schema.Message)
 async def post_message(message: message_schema.MessageBase):
     app.state.message = message_schema.Message(time=datetime.now(),
-                                         **message.dict())
+                                         **message.model_dump())
     return app.state.message
 ```
 
@@ -644,10 +644,10 @@ class MessageBase(BaseModel):
 
 ```python
     app.state.message = message_schema.Message(time=datetime.now(),
-                                         **message.dict())
+                                         **message.model_dump())
 ```
 
-`message` は `MessageBase` のインスタンスであり，`dict()` により[辞書型(dictionary)](https://docs.python.org/ja/3/tutorial/datastructures.html#dictionaries)に変換している(他の言語ではハッシュやmapや連想配列などと呼ばれる; key とそれに対応する value で構成される)．辞書型の前に `**` をつけると `key=value` の形式に展開され，関数の引数として渡される．
+`message` は `MessageBase` のインスタンスであり，`model_dump()` により[辞書型(dictionary)](https://docs.python.org/ja/3/tutorial/datastructures.html#dictionaries)に変換している(他の言語ではハッシュやmapや連想配列などと呼ばれる; key とそれに対応する value で構成される)．辞書型の前に `**` をつけると `key=value` の形式に展開され，関数の引数として渡される．
 
 ```console
  % python

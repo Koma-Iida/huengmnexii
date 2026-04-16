@@ -24,5 +24,5 @@ async def get_message():
 @app.post("/message", response_model=message_schema.Message)
 async def post_message(message: message_schema.MessageBase):
     app.state.message = message_schema.Message(time=datetime.now(),
-                                         **message.dict())
+                                         **message.model_dump())
     return app.state.message

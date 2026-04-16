@@ -35,7 +35,6 @@ async function api_request_get(url, method = 'GET') {
 
 // POST
 async function api_request_post(url, data, method = 'POST') {
-    const query = new URLSearchParams({message: data})
     try {
         const response = await fetch(url, {
             method: method,
