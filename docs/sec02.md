@@ -625,10 +625,10 @@ def surface_area_of_cube(edge_length: float) -> str:
 ここでは引数`edge_length`は`float`が期待され，返り値は`str`であると定義されている．なお，`edge_length`に`float`以外(たとえば`int`)が渡されても特にエラーを発生せず実行可能であり，あくまで静的解析ツールでのチェック(それによるコード品質の改善)を想定している．
 
 [^moon_weight]: ここのサンプルコードは元々以下であったが，[**質量**は変わらない](https://github.com/python/cpython/issues/120661)，という指摘を受け差し替えられた．
-```python
-    def moon_weight(earth_weight: float) -> str:
-        return f'On the moon, you would weigh {earth_weight * 0.166} kilograms.'
-```
+    ```python
+        def moon_weight(earth_weight: float) -> str:
+            return f'On the moon, you would weigh {earth_weight * 0.166} kilograms.'
+    ```
 
 本日のコード中にある `name: str | None` はこのような構文を利用したものである．`name` としては `str` か `None` が想定され，その Default の値は `Field(None, examples=["System"], description="Message from")` で与えられているが[^pydantic]，端的には `None` である(他の情報はドキュメント生成などに利用される)．すなわち，`name` や `message` のフィールドはリクエストに含めなくてもよく，その場合は自動的に `None` が設定される．
 
