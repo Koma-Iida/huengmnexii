@@ -19,7 +19,7 @@ async def post_message(request: Request, message: message_schema.MessageBase):
     """message のPOST"""
     m = message_schema.Message(time=datetime.now(),
                                id=request.app.state.counter,
-                               **message.dict())
+                               **message.model_dump())
     request.app.state.messages.messages[request.app.state.counter] = m
     request.app.state.counter += 1
     return m
@@ -43,7 +43,7 @@ async def put_message(request: Request,
         raise HTTPException(status_code=404,
                             detail="Message cannot be found")
     m = message_schema.Message(time=datetime.now(), id=message_id,
-                               **message.dict())
+                               **message.model_dump())
     request.app.state.messages.messages[message_id] = m
     return m
 

@@ -54,7 +54,7 @@ async def post_message(request: Request, message: message_schema.MessageBase):
     next_id = request.app.state.system.current_id + 1
     time = datetime.now()
     m = message_schema.Message(time=time, update_time=time, id=next_id,
-                               **message.dict())
+                               **message.model_dump())
     request.app.state.system.messages[next_id] = m
     request.app.state.system.current_id = next_id
     return m
@@ -83,7 +83,7 @@ async def put_message(request: Request,
     m = message_schema.Message(time=orig.time,
                                update_time=datetime.now(),
                                id=message_id,
-                               **message.dict())
+                               **message.model_dump())
     request.app.state.system.messages[message_id] = m
     return m
 
