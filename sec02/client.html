@@ -38,7 +38,9 @@ $(function () {
             api_request(url).then(function(value) {
                 $('#get_message_result_name').html(value['name'])
                 $('#get_message_result_message').html(value['message'])
+                $('#get_message_result_priority').html(value['priority'])
                 $('#get_message_result_time').html(value['time'])
+                $('#get_message_result_the_number_of_pizza_we_made_yesterday').html(value['the_number_of_pizza_we_made_yesterday'])
                 console.log(value['message'])
             })
         })
@@ -49,7 +51,9 @@ $(function () {
             console.log(url)
             const data = {
                 name: $("#post_message_name").val().trim(),
-                message: $("#post_message_message").val().trim()
+                message: $("#post_message_message").val().trim(),
+                priority: $("#post_message_priority").val().trim(),
+                the_number_of_pizza_we_made_yesterday: $("#post_message_the_number_of_pizza_we_made_yesterday").val().trim()
             }
             if (data['name'].length == 0 || data['message'].length == 0 || url.length == 0) {
                 return
@@ -63,13 +67,17 @@ $(function () {
         'click', function () {
             $('#get_message_result_name').empty()
             $('#get_message_result_message').empty()
+            $('#get_message_result_priority').empty()
             $('#get_message_result_time').empty()
+            $('#get_message_result_the_number_of_pizza_we_made_yesterday').empty()
         })
     // POST情報のクリア
     $('button#post_message_clear').on(
         'click', function () {
             $('#post_message_result').empty()
             $('#post_message_message').val('')
+            $('#post_message_priority').val('')
+            $('#post_message_the_number_of_pizza_we_made_yesterday').val('')
         })
 })
 </script>
@@ -89,7 +97,9 @@ input {
 <li>URL: <input type="text" id="get_message_url" value="http://127.0.0.1:8000/message"></li>
 <li>Name: <span id="get_message_result_name"></span></li>
 <li>Message: <span id="get_message_result_message"></span></li>
+<li>Priority: <span id="get_message_result_priority"></span></li>
 <li>Time: <span id="get_message_result_time"></span></li>
+<li>The Number of Pizza We Made Yesterday: <span id="get_message_result_the_number_of_pizza_we_made_yesterday"></span></li>
 </ul>
 
 <p>
@@ -105,6 +115,8 @@ input {
 <li>URL: <input type="text" id="post_message_url" value="http://127.0.0.1:8000/message"></li>
 <li>Name: <input type="text" id="post_message_name"></li>
 <li>Message: <input type="text" id="post_message_message"></li>
+<li>Priority: <input type="text" id="post_message_priority"></li>
+<li>The Number of Pizza We Made Yesterday: <input type="text" id="post_message_the_number_of_pizza_we_made_yesterday"></li>
 </ul>
 
 <p>
