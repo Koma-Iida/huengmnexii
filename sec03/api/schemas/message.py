@@ -17,3 +17,7 @@ class MessageBase(BaseModel):
 
 class Message(MessageBase):
     time: datetime | None = Field(None, description="Message post time")
+    
+    
+class Messages(BaseModel):
+    messages: list[Message] = Field(default_factory=list, description="List of messages")

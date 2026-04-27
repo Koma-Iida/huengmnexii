@@ -31,7 +31,31 @@ async function api_request_post(url, data) {
 }
 async function post_data(url, data) {
     api_request_post(url, data).then(function(value) {
-        $('#post_message_result').html(value['name'] + ': ' + value['message'])
+        console.log("サーバーからの戻り値:", value);
+
+        // パターン1: Python側が「最新の1件だけ」を返してきている場合
+        if (value['name'] !== undefined && value['message'] !== undefined) {
+            $('#post_message_result').html(value['name'] + ': ' + value['message']);
+            return;
+        }
+
+        // パターン2: Python側が「全体のリスト」を返してきている場合
+        if (value['messages'] !== undefined && value['messages'].length > 0) {
+            const messagesList = value['messages'];
+            const latest = messagesList[messagesList.length - 1];
+            $('#post_message_result').html(latest['name'] + ': ' + latest['message']);
+            return;
+        }
+
+        // パターン3: FastAPIがデータ形式エラー(422など)を返してきた場合
+        if (value['detail'] !== undefined) {
+            $('#post_message_result').html("送信データの形式エラーです。F12キーでコンソールを見てみてください！");
+            console.error("FastAPIのエラー詳細:", value['detail']);
+            return;
+        }
+
+        // どれにも当てはまらない場合
+        $('#post_message_result').html("想定外のデータが返ってきました。コンソールを確認してください。");
     })
 }
 $(function () {
@@ -40,15 +64,22 @@ $(function () {
         'click', function () {
             const url = $('#get_message_url').val()
             api_request(url).then(function(value) {
-                if (value['image'] ) {
-                    const img = 'data:' + value['image_type'] + ';base64,' + value['image']
+
+                const messageList = value['messages']
+                if(!messageList || messageList.length == 0) {
+                    $('#get_message_result_name').html("まだメッセージがありません");
+                    return;
+                }
+                const latest = messageList[messageList.length - 1]
+                if (latest['image'] ) {
+                    const img = 'data:' + latest['image_type'] + ';base64,' + latest['image']
                     $('#get_message_result_image').attr("src", img)
                 }
-                $('#get_message_result_name').html(value['name'])
-                $('#get_message_result_message').html(value['message'])
-                $('#get_message_result_image_type').html(value['image_type'])
-                $('#get_message_result_image_filename').html(value['image_filename'])
-                $('#get_message_result_time').html(value['time'])
+                $('#get_message_result_name').html(latest['name'])
+                $('#get_message_result_message').html(latest['message'])
+                $('#get_message_result_image_type').html(latest['image_type'])
+                $('#get_message_result_image_filename').html(latest['image_filename'])
+                $('#get_message_result_time').html(latest['time'])
             })
         })
     // POST (メッセージ送信)
