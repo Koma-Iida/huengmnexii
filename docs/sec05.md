@@ -1162,9 +1162,10 @@ class Response(System):
     -   認証/認可版のサンプルを [sec06.zip](sec06.zip) に用意している．
         -   <https://fastapi.tiangolo.com/ja/tutorial/security/> に基づくコードとしている．
         -   このサンプルではログイン済みユーザかどうかのみを確認しており，各メッセージの作成者かどうかは確認していない．認証は行っているが，厳密な意味での認可制御は行っていない．
-        -   本サンプルでは簡単のため
+        -   追加で `pip` により install すべきモジュールがある．`pip install -r requirements.txt` などで install する．
+        -   セキュリティの観点から以下に注意すること．
             -   `SECRET_KEY` をソースコード中に直接記述しているが，実運用では環境変数などから読み込むべき．
-            -   取得したアクセストークンをブラウザの `localStorage` に保存している．この方法では JavaScript からトークンを参照できるため，XSS (Cross-Site Scripting) などにより不正なスクリプトが実行された場合，トークンが読み取られる可能性がある．実運用では，HTTPS の利用，XSS 対策，トークンの有効期限管理，Cookie の `HttpOnly` 属性の利用など，より慎重な設計が必要となる．
+            -   取得したアクセストークンをブラウザの `localStorage` に保存している．この方法では JavaScript からトークンを参照できるため，XSS (Cross-Site Scripting)などにより不正なスクリプトが実行された場合，トークンが読み取られる可能性がある．実運用では，HTTPS の利用，XSS 対策，トークンの有効期限管理，Cookie の `HttpOnly` 属性の利用など，より慎重な設計が必要となる．
 -   リレーショナル・データベース(RDB)
     -   規模が大きくなると耐えられません．
     -   FastAPI は [Object-relational mapping (ORM)](https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E9%96%A2%E4%BF%82%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0)に対応可能ですが，理解には追加知識がかなり必要になります．
