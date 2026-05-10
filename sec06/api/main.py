@@ -20,11 +20,6 @@ def load(app):
         # →Default の System を作成する
         app.state.system = System()
 
-    app.state.counter = 0
-    if len(app.state.system.messages) != 0:
-        # id の最大値 + 1 をカウンタにセット
-        app.state.counter = max(app.state.system.messages.keys()) + 1
-
 
 async def save(app):
     with open("data.json", "wt", encoding="utf-8") as f:
