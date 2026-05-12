@@ -1,11 +1,11 @@
-from pydantic import BaseModel
+from sqlmodel import SQLModel, Field
 
 
-class User(BaseModel):
-    username: str
+class User(SQLModel):
+    username: str = Field(primary_key=True)
 
 
-class UserInDB(User):
+class UserInDB(User, table=True):
     hashed_password: str
 
 

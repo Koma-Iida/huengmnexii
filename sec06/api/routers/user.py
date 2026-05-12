@@ -15,7 +15,6 @@ from pwdlib import PasswordHash
 from api.schemas.user import User, UserInDB, UserCreate
 from api.schemas.token import Token, TokenData
 from api.db import get_session
-from api.models import UserModel
 
 SECRET_KEY = "410f0f0770a1a93c9d3010b6276490d757f0351ec6365fa4f4660a5006b7d269"
 ALGORITHM = "HS256"
@@ -38,7 +37,7 @@ def get_password_hash(password):
 
 
 def get_user(session: Session, username: str):
-    user = session.get(UserModel, username)
+    user = session.get(UserInDB, username)
     if user is None:
         return None
     return UserInDB(username=user.username, hashed_password=user.hashed_password)
@@ -116,14 +115,14 @@ async def create_user(user: UserCreate, session: Session = Depends(get_session))
     username = user.username.strip()
     password = user.password.strip()
 
-    if session.get(UserModel, username) is not None:
+    if session.get(UserInDB, username) is not None:
         return "Already exists"
     if len(password) == 0:
         return "Empty password"
     if len(username) == 0:
         return "Empty username"
 
-    session.add(UserModel(
+    session.add(UserInDB(
         username=username,
         hashed_password=password_hash.hash(password)))
     session.commit()
