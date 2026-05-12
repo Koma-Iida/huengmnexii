@@ -478,7 +478,7 @@ button.toggle_important:hover {
 
 補足(読み飛ばしてもよい):
 
-なお，これまで内部状態を保持していた `app.state` に APIRouter (ここでは `api/routers/message.py`)からアクセスする必要があり，これには各パスオペレーション関数([第1回](sec01.html)参照)に `request` という引数を定義し，この `request.app` (これは `main.py` で生成している FastAPI のインスタンス `app` に対応する)を用いて `request.app.state` にアクセスしている．以下参照．
+なお，これまで内部状態を保持していた `app.state` に APIRouter (ここでは `api/routers/message.py`)からアクセスする必要があり，これには各パスオペレーション関数([第1回](sec01.html)参照)に `request` という引数を定義し，この `request.app` (これは `main.py` で生成している FastAPI のインスタンス `app` に対応する)を用いて `state` にアクセスしている．以下参照．
 
 ```python
 @router.get("/messages", response_model=message_schema.Messages)
