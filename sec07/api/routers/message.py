@@ -75,10 +75,9 @@ async def post_message(message: MessagePost,
     now = datetime.now()
     m = Message(
         name=current_user.username,
-        message=message.message,
-        important=message.important,
         time=now,
         update_time=now,
+        **message.model_dump(),
     )
     session.add(m)
     session.commit()
